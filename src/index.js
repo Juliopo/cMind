@@ -1,4 +1,4 @@
-/* global document, module */
+/* global document, window */
 import Parallelogram from './Parallelogram';
 
 const app = init();
@@ -39,4 +39,7 @@ function init() {
   }
 }
 
-module.hot.accept();
+// this is the hot module replacement.
+if (window.module) {
+  window.module.hot.accept();
+}
