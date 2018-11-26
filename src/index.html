@@ -99,10 +99,12 @@
           The user would have the posibility to toggle visibility of the Parallelogram lines and the ellipsed inscribed,
           also you can lock/unlock the parallelogram fit, that means you can move the points around the canvas screen and the parallelogram can be deformed
         </p>
-        <h2>Some Techy stuff</h2>
+        <h2>Some techy stuff</h2>
         <p>
-          The user would have the posibility to toggle visibility of the Parallelogram lines and the ellipsed inscribed,
-          also you can lock/unlock the parallelogram fit, that means you can move the points around the canvas screen and the parallelogram can be deformed
+          The app is written in plain vanilla js using prototyping and module pattern,
+          I also used life cycles based on events and states, creation, updating and destroying functionality (similar to some js frameworks).
+          The canvas is refreshing its render every 1000/60 ms using the requestAnimationFrame,
+          that means the animation will be very soft, but it will render if there's any state changed, that way the permormance would be very good.
         </p>
       </div>
       <canvas id="canvas-app" width="800" height="600"></canvas>
