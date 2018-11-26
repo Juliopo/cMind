@@ -237,6 +237,41 @@ class Parallelogram {
     ctx.closePath();
   }
   /**
+   * Get the Parallelogram Area
+   * @return {Number}
+   */
+  getParallelogramArea() {
+    const shape = this.shapes;
+
+    return Math.abs(((shape[0].x * shape[1].y - shape[0].y * shape[1].x) + (shape[1].x * shape[2].y - shape[1].y * shape[2].x) + (shape[2].x * shape[3].y - shape[2].y * shape[3].x) + (shape[3].x * shape[0].y - shape[3].y * shape[0].x)) / 2);
+  }
+  /**
+   * Find the center of mass of the Parallelogram
+   * @return {x: Number, y: Number} {centerX, centerY} Coordinatpositions of the center of Parallelogram
+   */
+  getParalleloGramCenter() {
+    const shapes = this.shapes;
+
+    return {
+      centerX: (shapes[0].x + shapes[1].x + shapes[2].x + shapes[3].x) / 4,
+      centerY: (shapes[0].y + shapes[1].y + shapes[2].y + shapes[3].y) / 4
+    }
+  }
+  /**
+   * Draw the Area of parallelogram
+   * @param {Node} ctx - Canvas node
+   * @return {undefined}
+   */
+  drawParallelogramArea(ctx) {
+    ctx.beginPath();
+    ctx.font = "10px Arial";
+    ctx.fillStyle = "black";
+    ctx.textAlign = 'center';
+    ctx.fillText(`Area: ${this.getParallelogramArea()}`, this.getParalleloGramCenter().centerX, this.getParalleloGramCenter().centerY);
+    ctx.fill();
+    ctx.closePath();
+  }
+  /**
    * Execute the whole Parallelogram logic and render it.
    * @return {undefined}
    */
@@ -266,8 +301,10 @@ class Parallelogram {
         }
 
         if (this.shouldDrawEllipseInscribed) {
-          this.drawEllipseInscribed();
+          this.drawCircle(ctx);
         }
+
+        this.drawParallelogramArea(ctx);
       }
 
       this.shouldRedraw = false;
@@ -302,34 +339,17 @@ class Parallelogram {
     ctx.closePath();
   }
   /**
-   * Draw each bezierCurve from the area of the Parallelogram
+   * Draw a circle with the same area of the Parallelogram
+   * @param {Node} ctx - Canvas node
    * @return {undefined}
    */
-  drawEllipseInscribed() {
-    const ctx = this.ctx;
-    const shapes = this.shapes;
-    const shape1MiddleXPoint = shapes[0].x + ((shapes[1].x - shapes[0].x) * 0.5);
-    const shape1MiddleYPoint = shapes[0].y + ((shapes[1].y - shapes[0].y) * 0.5);
-    const shape2MiddleXPoint = shapes[1].x + ((shapes[2].x - shapes[1].x) * 0.5);
-    const shape2MiddleYPoint = shapes[1].y + ((shapes[2].y - shapes[1].y) * 0.5);
-    const shape3MiddleXPoint = shapes[2].x + ((shapes[3].x - shapes[2].x) * 0.5);
-    const shape3MiddleYPoint = shapes[2].y + ((shapes[3].y - shapes[2].y) * 0.5);
-    const shape4MiddleXPoint = shapes[3].x + ((shapes[0].x - shapes[3].x) * 0.5);
-    const shape4MiddleYPoint = shapes[3].y + ((shapes[0].y - shapes[3].y) * 0.5);
+  drawCircle(ctx) {
+    const r = Math.sqrt(this.getParallelogramArea() / Math.PI);
 
     ctx.beginPath();
     ctx.strokeStyle = 'gold';
-    ctx.lineWidth = 1;
-    ctx.moveTo(shape1MiddleXPoint, shape1MiddleYPoint);
-    ctx.bezierCurveTo(shapes[1].x, shapes[1].y, shape2MiddleXPoint, shape2MiddleYPoint, shape2MiddleXPoint, shape2MiddleYPoint);
-    ctx.moveTo(shape2MiddleXPoint, shape2MiddleYPoint);
-    ctx.bezierCurveTo(shapes[2].x, shapes[2].y, shape3MiddleXPoint, shape3MiddleYPoint, shape3MiddleXPoint, shape3MiddleYPoint);
-    ctx.moveTo(shape3MiddleXPoint, shape3MiddleYPoint);
-    ctx.bezierCurveTo(shapes[3].x, shapes[3].y, shape4MiddleXPoint, shape4MiddleYPoint, shape4MiddleXPoint, shape4MiddleYPoint);
-    ctx.moveTo(shape4MiddleXPoint, shape4MiddleYPoint);
-    ctx.bezierCurveTo(shapes[0].x, shapes[0].y, shape1MiddleXPoint, shape1MiddleYPoint, shape1MiddleXPoint, shape1MiddleYPoint);
+    ctx.arc(this.getParalleloGramCenter().centerX, this.getParalleloGramCenter().centerY, r, 0, 2 * Math.PI);
     ctx.stroke();
-    ctx.closePath();
   }
   /**
    * Draw each bezierCurve from the area of the Parallelogram
